@@ -3,7 +3,11 @@ const fs = require('fs');
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
-const users = {};
+const rawAlphaData = JSON.parse(fs.readFileSync(`${__dirname}/data/alpha.json`));
+const rawBetaData = JSON.parse(fs.readFileSync(`${__dirname}/data/beta.json`));
+
+let data = rawAlphaData.data.cards.splice(0);
+for(const element of data) { element.collected = false; }
 
 const respond = (request, response, status, content, type) => {
   response.writeHead(status, {
@@ -24,21 +28,66 @@ const getIndex = (request, response) => respond(request, response, 200, index, '
 
 const getCSS = (request, response) => respond(request, response, 200, css, 'text/css');
 
-const getUsers = (request, response) => {
+const getRawData = (request, response) => {
   const status = 200;
-  const responseContent = { users };
+  const responseContent = { data };
+
+  console.log(data);
 
   return respondJSON(request, response, status, responseContent);
 };
 
-const notReal = (request, response) => {
-  const status = 404;
-  const responseContent = { message: 'ERROR: NOT FOUND' };
+const getRandomCard = (request, response) => {
+  const status = 200;
+
+  const chosenCard = data[Math.floor(Math.random() * 294)];
+
+  const responseContent = { chosenCard };
+
+  console.log(chosenCard.name);
 
   return respondJSON(request, response, status, responseContent);
 };
 
-const addUser = (request, response) => {
+const getCardByName = (request, response) => {
+  let status = 200;
+  let responseContent = { };
+
+  const chosenCard = data.find((element) => element.name === request.query.name);
+
+  if (chosenCard != null) {
+    status = 200;
+    responseContent = { chosenCard };
+  } else {
+    status = 404;
+    responseContent = { id: 'Failed to find card.' };
+  }
+
+  return respondJSON(request, response, status, responseContent);
+};
+
+/*
+const addToCollection = (request, response) => {
+
+  let status = 204;
+  let responseContent = { };
+
+  const chosenCard = data.find((element) => element.name === request.query.name);
+
+  if (chosenCard != null) {
+    status = 204;
+    chosenCard.collected = !chosenCard.collected;
+    responseContent = { message: "Collection updated successfully!" };
+  } else {
+    status = 400;
+    responseContent = { id: 'Failed to find card. Please check that the name is correct.' };
+  }
+
+  return respondJSON(request, response, status, responseContent);
+
+
+
+
   let status = 400;
   const responseContent = {
     message: 'Name and age are both required.',
@@ -69,10 +118,11 @@ const addUser = (request, response) => {
 
   return respondJSON(request, response, status, {});
 };
+*/
 
 const notFound = (request, response) => {
   const status = 404;
-  const responseContent = { };
+  const responseContent = { id: 'Content not found.' };
 
   return respondJSON(request, response, status, responseContent);
 };
@@ -80,8 +130,10 @@ const notFound = (request, response) => {
 module.exports = {
   getIndex,
   getCSS,
-  getUsers,
-  notReal,
-  addUser,
+  getRawData,
+  getRandomCard,
+  getCardByName,
+  // addToCollection,
+  // switchSet,
   notFound,
 };

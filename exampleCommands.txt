@@ -1,0 +1,9 @@
+EXAMPLE COMMANDS:
+
+/getRawData
+/getRandomCard
+/getCardByName?name=Lightning%20Helix
+/getCardByName?name=Lightning%20Bolt
+
+/addToCollection
+/switchSet

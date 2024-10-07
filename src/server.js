@@ -35,10 +35,14 @@ const handlePost = (request, response, parsedUrl) => {
 const handleGet = (request, response, parsedUrl) => {
   if (parsedUrl.pathname === '/style.css') {
     responseHandler.getCSS(request, response);
-  } else if (parsedUrl.pathname === '/getUsers') {
-    responseHandler.getUsers(request, response);
+  } else if (parsedUrl.pathname === '/getRawData') {
+    responseHandler.getRawData(request, response);
+  } else if (parsedUrl.pathname === '/getRandomCard') {
+    responseHandler.getRandomCard(request, response);
+  } else if (parsedUrl.pathname === '/getCardByName') {
+    responseHandler.getCardByName(request, response);
   } else {
-    responseHandler.getIndex(request, response);
+    responseHandler.notFound(request, response);
   }
 };
 
@@ -47,6 +51,8 @@ const onRequest = (request, response) => {
 
   const protocol = request.connection.encrypted ? 'https' : 'http';
   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
+
+  request.query = Object.fromEntries(parsedUrl.searchParams);
 
   if (request.method === 'POST') {
     handlePost(request, response, parsedUrl);
