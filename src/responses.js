@@ -1,14 +1,20 @@
 const fs = require('fs');
 
+// Front Facing Files
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
+// Raw JSON Data
 const rawAlphaData = JSON.parse(fs.readFileSync(`${__dirname}/data/alpha.json`));
 const rawBetaData = JSON.parse(fs.readFileSync(`${__dirname}/data/beta.json`));
 
+// Configure data to be easier to work with
 let data = rawAlphaData.data.cards.splice(0);
 for(const element of data) { element.collected = false; }
 
+let tokenData = [];
+
+// Basic Response Protocol
 const respond = (request, response, status, content, type) => {
   response.writeHead(status, {
     'Content-Type': type,
@@ -22,21 +28,32 @@ const respond = (request, response, status, content, type) => {
   response.end();
 };
 
+// Repond with JSON
 const respondJSON = (request, response, status, content) => respond(request, response, status, JSON.stringify(content), 'application/json');
 
+// Returns index.html
 const getIndex = (request, response) => respond(request, response, 200, index, 'text/html');
 
+// Returns CSS sheet
 const getCSS = (request, response) => respond(request, response, 200, css, 'text/css');
 
+// Returns the current set's raw data object as JSON
 const getRawData = (request, response) => {
   const status = 200;
   const responseContent = { data };
 
-  console.log(data);
+  return respondJSON(request, response, status, responseContent);
+};
+
+// Returns the current tokens array as JSON
+const getTokenData = (request, response) => {
+  const status = 200;
+  const responseContent = { tokenData };
 
   return respondJSON(request, response, status, responseContent);
 };
 
+// Returns a random card from the currently selected set
 const getRandomCard = (request, response) => {
   const status = 200;
 
@@ -44,11 +61,10 @@ const getRandomCard = (request, response) => {
 
   const responseContent = { chosenCard };
 
-  console.log(chosenCard.name);
-
   return respondJSON(request, response, status, responseContent);
 };
 
+// Returns requested card given a name parameter, or fails to find. 
 const getCardByName = (request, response) => {
   let status = 200;
   let responseContent = { };
@@ -66,13 +82,14 @@ const getCardByName = (request, response) => {
   return respondJSON(request, response, status, responseContent);
 };
 
-/*
-const addToCollection = (request, response) => {
-
-  let status = 204;
+// Flips requested card's collected status, if card is found.
+const addCardToCollection = (request, response) => {
+  let status = 500;
   let responseContent = { };
 
-  const chosenCard = data.find((element) => element.name === request.query.name);
+  const chosenCard = data.find((element) => element.name === request.body.name);
+
+  
 
   if (chosenCard != null) {
     status = 204;
@@ -84,42 +101,31 @@ const addToCollection = (request, response) => {
   }
 
   return respondJSON(request, response, status, responseContent);
+};
 
+// Flips requested card's collected status, if card is found.
+const addTokenToCollection = (request, response) => {
+  let status = 500;
+  let responseContent = { };
 
-
-
-  let status = 400;
-  const responseContent = {
-    message: 'Name and age are both required.',
+  const newToken = {
+    name: request.body.name,
+    description: request.body.description,
   };
 
-  const { name, age } = request.body;
-
-  if (!name || !age) {
-    responseContent.id = 'missingParams';
-    return respondJSON(request, response, status, responseContent);
-  }
-
-  status = 204;
-
-  if (!users[name]) {
+  if (newToken.name && newToken.description) {
     status = 201;
-    users[name] = {
-      name,
-    };
+    tokenData.push(newToken);
+    responseContent = { message: "Token added successfully!" };
+  } else {
+    status = 400;
+    responseContent = { id: 'Missing Valid Parameters.' };
   }
 
-  users[name].age = age;
-
-  if (status === 201) {
-    responseContent.message = 'Created Successfully';
-    return respondJSON(request, response, status, responseContent);
-  }
-
-  return respondJSON(request, response, status, {});
+  return respondJSON(request, response, status, responseContent);
 };
-*/
 
+// Default response when a request cannot be found.
 const notFound = (request, response) => {
   const status = 404;
   const responseContent = { id: 'Content not found.' };
@@ -131,9 +137,11 @@ module.exports = {
   getIndex,
   getCSS,
   getRawData,
+  getTokenData,
   getRandomCard,
   getCardByName,
-  // addToCollection,
+  addCardToCollection,
+  addTokenToCollection,
   // switchSet,
   notFound,
 };

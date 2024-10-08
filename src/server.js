@@ -27,16 +27,22 @@ const parseBody = (request, response, handler) => {
 };
 
 const handlePost = (request, response, parsedUrl) => {
-  if (parsedUrl.pathname === '/addUser') {
-    parseBody(request, response, responseHandler.addUser);
+  if (parsedUrl.pathname === '/addCardToCollection') {
+    parseBody(request, response, responseHandler.addCardToCollection);
+  } else if (parsedUrl.pathname === '/addTokenToCollection') {
+    parseBody(request, response, responseHandler.addTokenToCollection);
   }
 };
 
 const handleGet = (request, response, parsedUrl) => {
-  if (parsedUrl.pathname === '/style.css') {
+  if (parsedUrl.pathname === '/index' || parsedUrl.pathname === '/') {
+    responseHandler.getIndex(request, response);
+  } else if (parsedUrl.pathname === '/style.css') {
     responseHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getRawData') {
     responseHandler.getRawData(request, response);
+  } else if (parsedUrl.pathname === '/getTokenData') {
+    responseHandler.getTokenData(request, response);
   } else if (parsedUrl.pathname === '/getRandomCard') {
     responseHandler.getRandomCard(request, response);
   } else if (parsedUrl.pathname === '/getCardByName') {
