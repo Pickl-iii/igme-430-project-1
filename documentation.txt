@@ -1,0 +1,33 @@
+Dylan Pegg
+IGME 430
+Project 1 Milestone
+
+--------------------
+
+**What dataset are you using?**
+
+My dataset is the list of cards from the Alpha printing of Magic: The Gathering. I obtained this data from mtgjson.com
+
+
+
+**What work has been completed for this milestone?**
+
+I currently have 4 GET/HEAD requests alongside 2 FETCH requests. Users can search for specific cards by name, generate a random card from the set, view their current list of tokens, or simply look at the raw data. They can also add and remove cards from their collection, as well as add tokens to their collection. 
+
+
+
+**What work is left, and how do you plan to complete it?**
+
+I still intend to flesh out a few more options for finding and viewing cards, such as searching by artists/color. I also need to make the browser HTML and CSS look good, add more text content, and add buttons to streamline functionality. I intend to sit down and work on these features on Saturday and Monday respectively.
+
+
+
+**Do you have plans for going above and beyond?**
+
+I intend to implement a system that lets users switch between different data sets of cards (i.e. switch from Alpha to Legends). There will also be an option to export their entire collection as a file.
+
+
+
+**If you used any borrowed code or code fragments, where did you get them from?**
+
+I exclusively referenced and used code from class demos and my previous assignments from this class. 

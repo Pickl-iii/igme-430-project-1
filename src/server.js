@@ -31,6 +31,8 @@ const handlePost = (request, response, parsedUrl) => {
     parseBody(request, response, responseHandler.addCardToCollection);
   } else if (parsedUrl.pathname === '/addTokenToCollection') {
     parseBody(request, response, responseHandler.addTokenToCollection);
+  } else if (parsedUrl.pathname === '/switchSet') {
+    parseBody(request, response, responseHandler.switchSet);
   }
 };
 
@@ -47,6 +49,8 @@ const handleGet = (request, response, parsedUrl) => {
     responseHandler.getRandomCard(request, response);
   } else if (parsedUrl.pathname === '/getCardByName') {
     responseHandler.getCardByName(request, response);
+  } else if (parsedUrl.pathname === '/getCard') {
+    responseHandler.getCard(request, response);
   } else {
     responseHandler.notFound(request, response);
   }
