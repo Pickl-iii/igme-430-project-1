@@ -4,12 +4,15 @@ const fs = require('fs');
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
+// Remove unneeded data and clean up
 const prepareData = (rawData) => {
-  // Remove unneeded data and clean up
   const data = rawData.data.cards.splice(0);
-  data.map((element) => {
-    element.collected = false;
+
+  data.forEach((element) => {
+    const card = element;
+    card.collected = false;
   });
+
   return data;
 };
 
@@ -76,6 +79,8 @@ const getRandomCard = (request, response) => {
   return respondJSON(request, response, status, responseContent);
 };
 
+/*
+// getCard does the same thing but with more functionality!
 // Returns requested card given a name parameter, or fails to find.
 const getCardByName = (request, response) => {
   let status = 200;
@@ -94,6 +99,7 @@ const getCardByName = (request, response) => {
 
   return respondJSON(request, response, status, responseContent);
 };
+*/
 
 // Returns requested card given a name parameter, or fails to find.
 const getCard = (request, response) => {
@@ -164,7 +170,7 @@ const addCardToCollection = (request, response) => {
   return respondJSON(request, response, status, responseContent);
 };
 
-// Flips requested card's collected status, if card is found.
+// Creates a new token object and adds to array.
 const addTokenToCollection = (request, response) => {
   let status = 500;
   let responseContent = { };
@@ -191,7 +197,7 @@ const switchSet = (request, response) => {
   let status = 500;
   let responseContent = { };
 
-  switch (request.body.set) {
+  switch (request.body.name) {
     case 'LEA':
       data = alphaData;
       status = 204;
@@ -255,7 +261,6 @@ module.exports = {
   getRawData,
   getTokenData,
   getRandomCard,
-  getCardByName,
   getCard,
   addCardToCollection,
   addTokenToCollection,
