@@ -35,6 +35,8 @@
         
         let jsonString = JSON.stringify(obj);
         content.innerHTML += `<p>${jsonString}</p>`;
+      } else {
+        content.innerHTML += '<p>Meta Data Received</p>';
       }
     };
 
@@ -54,24 +56,27 @@
     const requestCardSearch = async (userForm) => {
       const method = userForm.querySelector('#methodSelect').value;
 
-      let url = userForm.querySelector('#urlField').value + '&';
+      let url = userForm.querySelector('#urlField').value + '?';
+
+      console.log(userForm);
+
       if(userForm.querySelector('#cardName').value) { 
-        url += 'name=' + userForm.querySelector('#cardName').value + '?';
+        url += '&name=' + userForm.querySelector('#cardName').value;
       }
       if(userForm.querySelector('#cardCMC').value) { 
-        url += 'cmc=' + userForm.querySelector('#cardCMC').value + '?';
+        url += '&cmc=' + userForm.querySelector('#cardCMC').value;
       }
       if(userForm.querySelector('#cardColor').value) { 
-        url += 'color=' + userForm.querySelector('#cardColor').value + '?';
+        url += '&color=' + userForm.querySelector('#cardColor').value;
       }
       if(userForm.querySelector('#cardRarity').value) { 
-        url += 'rarity=' + userForm.querySelector('#cardRarity').value + '?';
+        url += '&rarity=' + userForm.querySelector('#cardRarity').value;
       }
       if(userForm.querySelector('#cardType').value) { 
-        url += 'type=' + userForm.querySelector('#cardType').value + '?';
+        url += '&type=' + userForm.querySelector('#cardType').value;
       }
       if(userForm.querySelector('#cardArtist').value) { 
-        url += 'artist=' + userForm.querySelector('#cardArtist').value + '?';
+        url += '&artist=' + userForm.querySelector('#cardArtist').value;
       }
       
       let response = await fetch(url, {
@@ -103,6 +108,7 @@
       }
 
       let response = await fetch(url, object);
+
       handleResponse(response, true);
     };
 
@@ -119,7 +125,7 @@
       const cardSearchForm = document.querySelector('#cardSearchForm');
       const getCard = (e) => {
         e.preventDefault();
-        requestCardSearch(simpleGetForm);
+        requestCardSearch(cardSearchForm);
         return false;
       }
       cardSearchForm.addEventListener('submit', getCard);
@@ -163,6 +169,7 @@
         <select id='urlField'>
           <option value='/getRawData'>Get RAW Set Data</option>
           <option value='/getRandomCard'>Get Random Card</option>
+          <option value='/getCollectionData'>Get Set Collection</option>
           <option value='/getTokenData'>Get Token Collection</option>
           <option value='/fakeRequest'>Make an Invalid Request</option>
         </select>
@@ -193,6 +200,7 @@
         <input type="number" id="cardCMC" name="cardCMC" min="0" max="10">
         <label for="cardColor">Color:</label>
         <select id="cardColor" name="cardColor">
+          <option value=""> </option>
           <option value="W">White</option>
           <option value="U">Blue</option>
           <option value="B">Black</option>
@@ -202,6 +210,7 @@
         </select>
         <label for="cardType">Type:</label>
         <select id="cardType" name="cardType">
+          <option value=""> </option>
           <option value="creature">Creature</option>
           <option value="sorcery">Sorcery</option>
           <option value="instant">Instant</option>
@@ -211,6 +220,7 @@
         </select>
         <label for="cardRarity">Rarity:</label>
         <select id="cardRarity" name="cardRarity">
+          <option value=""> </option>
           <option value="common">Common</option>
           <option value="uncommon">Uncommon</option>
           <option value="rare">Rare</option>
@@ -226,7 +236,7 @@
       <form id="collectionForm" action="/addCardToCollection" method="POST">
         <label for="name">Card Name: </label>
         <input id="nameField" type="text" name="name" />
-        <input id="addToCollectionButton" type="submit" value="Add To Collection" />
+        <input id="addToCollectionButton" type="submit" value="Add to/Remove from Collection" />
       </form>
 
       <br>
@@ -263,8 +273,16 @@
 
   </section>
   
-  <section id="content">
-    <h2>Responses</h2>
+  <section>
+    <h2>Card(s) Returned</h2>
+    <section id="cleanContent">
+
+    </section>
+
+    <h2>Raw Data</h2>
+    <section id="rawContent">
+
+    </section>
   </section>
 </body>
 </html>

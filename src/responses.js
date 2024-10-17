@@ -68,6 +68,19 @@ const getTokenData = (request, response) => {
   return respondJSON(request, response, status, responseContent);
 };
 
+// Returns the current set colletion as JSON
+const getCollectionData = (request, response) => {
+  const status = 200;
+
+  let collection = data.filter((card) => {
+    return card.collected === true;
+  });
+
+  const responseContent = { collection };
+
+  return respondJSON(request, response, status, responseContent);
+};
+
 // Returns a random card from the currently selected set
 const getRandomCard = (request, response) => {
   const status = 200;
@@ -121,7 +134,7 @@ const getCard = (request, response) => {
   // Color
   if (request.query.color != null) {
     // Custom 'C' case for colorless cards (find empty color arrays)
-    if (request.query.color.include('C')) {
+    if (request.query.color === 'C') {
       results = results.filter((card) => card.colors.length === 0);
     } else {
       results = results.filter((card) => card.colors.includes(request.query.color));
@@ -259,6 +272,7 @@ module.exports = {
   getIndex,
   getCSS,
   getRawData,
+  getCollectionData,
   getTokenData,
   getRandomCard,
   getCard,

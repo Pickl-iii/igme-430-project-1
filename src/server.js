@@ -43,7 +43,9 @@ const handleGet = (request, response, parsedUrl) => {
     responseHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getRawData') {
     responseHandler.getRawData(request, response);
-  } else if (parsedUrl.pathname === '/getTokenData') {
+  } else if (parsedUrl.pathname === '/getCollectionData') {
+    responseHandler.getCollectionData(request, response);
+  }else if (parsedUrl.pathname === '/getTokenData') {
     responseHandler.getTokenData(request, response);
   } else if (parsedUrl.pathname === '/getRandomCard') {
     responseHandler.getRandomCard(request, response);
