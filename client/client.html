@@ -208,25 +208,7 @@
 
     <br>
 
-    <h3>Basic Requests</h3>
-      <form id="simpleGetForm" method="GET">
-        <select id='urlField'>
-          <option value='/getRawData'>Get RAW Set Data</option>
-          <option value='/getRandomCard'>Get Random Card</option>
-          <option value='/getCollectionData'>Get Set Collection</option>
-          <option value='/getTokenData'>Get Token Collection</option>
-          <option value='/fakeRequest'>Make an Invalid Request</option>
-        </select>
-        <select id="methodSelect">
-          <option value="get">GET</option>
-          <option value="head">HEAD</option>
-        </select>
-        <input type="submit" value="Send" />
-      </form>
-
-      <br>
-
-      <h3>Card Search</h3>
+    <h3>Card Search</h3>
       <form id="cardSearchForm" method="GET">
         <select id='urlField'>
           <option value='/getCard'>Search for Card</option>
@@ -255,12 +237,12 @@
         <label for="cardType">Type:</label>
         <select id="cardType" name="cardType">
           <option value=""> </option>
-          <option value="creature">Creature</option>
-          <option value="sorcery">Sorcery</option>
-          <option value="instant">Instant</option>
-          <option value="enchantment">Enchantment</option>
-          <option value="artifact">Artifact</option>
-          <option value="land">Land</option>
+          <option value="Creature">Creature</option>
+          <option value="Sorcery">Sorcery</option>
+          <option value="Instant">Instant</option>
+          <option value="Enchantment">Enchantment</option>
+          <option value="Artifact">Artifact</option>
+          <option value="Land">Land</option>
         </select>
         <label for="cardRarity">Rarity:</label>
         <select id="cardRarity" name="cardRarity">
@@ -274,11 +256,48 @@
 
     <br>
 
+    <h3>Basic Requests</h3>
+      <form id="simpleGetForm" method="GET">
+        <select id='urlField'>
+          <option value='/getRawData'>Get RAW Set Data</option>
+          <option value='/getRandomCard'>Get Random Card</option>
+          <option value='/getCollectionData'>Get Set Collection</option>
+          <option value='/getTokenData'>Get Token Collection</option>
+          <option value='/fakeRequest'>Make an Invalid Request</option>
+        </select>
+        <select id="methodSelect">
+          <option value="get">GET</option>
+          <option value="head">HEAD</option>
+        </select>
+        <input type="submit" value="Send" />
+      </form>
+
+      <br>
+
     <hr>
 
     <h2> POST Requests</h2>
 
     <br>
+
+    <h3>Switch Current Set</h3>
+      <form id="setForm" action="/switchSet" method="POST">
+        <label for="name">Select Set:</label>
+        <select id="nameField" name="name">
+          <option value="LEA">Alpha</option>
+          <option value="LEB">Beta</option>
+          <option value="2ED">Unlimited</option>
+          <option value="ARN">Arabian Nights</option>
+          <option value="ATQ">Antiquities</option>
+          <option value="LEG">Legends</option>
+          <option value="DRK">The Dark</option>
+          <option value="FEM">Fallen Empires</option>
+          <option value="FAKE">Fake Set</option>
+        </select>
+        <input id="switchSetsButton" type="submit" value="Switch Set" />
+      </form>
+
+      <br>
 
     <h3>Modify Card Collection</h3>
       <form id="collectionForm" action="/addCardToCollection" method="POST">
@@ -296,25 +315,6 @@
         <label for="description">Token Description: </label>
         <input id="descriptionField" type="text" name="description" />
         <input id="addToTokensButton" type="submit" value="Add To Collection" />
-      </form>
-
-      <br>
-
-      <h3>Switch Current Set</h3>
-      <form id="setForm" action="/switchSet" method="POST">
-        <label for="name">Select Set:</label>
-        <select id="nameField" name="name">
-          <option value="LEA">Alpha</option>
-          <option value="LEB">Beta</option>
-          <option value="2ED">Unlimited</option>
-          <option value="ARN">Arabian Nights</option>
-          <option value="ATQ">Antiquities</option>
-          <option value="LEG">Legends</option>
-          <option value="DRK">The Dark</option>
-          <option value="FEM">Fallen Empires</option>
-          <option value="FAKE">Fake Set</option>
-        </select>
-        <input id="switchSetsButton" type="submit" value="Switch Set" />
       </form>
 
       <br>

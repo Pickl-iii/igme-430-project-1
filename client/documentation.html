@@ -9,6 +9,108 @@
     <h1>Project 1 Documentation</h1>
     <a href="/"><button type="button">Card Search</button></a>
     <hr>
-    <p>Testing.</p>
+    <h2>GET/HEAD Endpoints</h2>
+    <h3>Card Search</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/getCard'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Query Params:</i> <br>
+            - 'name' (optional) | the name of the card <br>
+            - 'cmc' (optional) | the converted mana cost of the card <br>
+            - 'color' (optional) | the color of the card <br>
+            - 'rarity' (optional) | the rarity of the card <br>
+            - 'type' (optional) | the type of the card <br>
+            - 'artist' (optional) | the name of the artist
+        </p></li>
+        <li><p><i>Return Value:</i> Returns an array containing all cards from the current set that match the given combination of parameters.</p></li>
+        <li><p><i>Usage:</i> Find cards that match given criteria (NOTE: Text fields are case sensitive).</p></li>
+        <li><p><i>Examples (from Alpha):</i> <br>
+            - '/getCard?name=Lightning%20Bolt' (Returns 1 card named Lightning Bolt)<br>
+            - '/getCard?type=Artifact&cmc=0' (Returns 6 cards that are Artifacts with Mana Cost 0)<br>
+            - '/getCard?artist=Christopher%20Rush&color=R' (Returns 4 cards that are illustrated by Chris Rush and are Red)
+        </p></li>
+    </ul>
+    <br>
+    <h3>Raw Data</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/getRawData'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Return Value:</i> Returns an array containing every card object in the currently selected set.</p></li>
+        <li><p><i>Usage:</i> View raw json data for testing / usage in other applications.</p></li>
+    </ul>
+    <br>
+    <h3>Random Card</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/getRandomCard'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Return Value:</i> Returns an array containing 1 card object chosen at random from the current set.</p></li>
+        <li><p><i>Usage:</i> Find random cards.</p></li>
+    </ul>
+    <br>
+    <h3>Collection Data</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/getCollectionData'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Return Value:</i> Returns an array containing all card objects with a 'collected' field equal to true.</p></li>
+        <li><p><i>Usage:</i> View cards that the user has marked as being collected.</p></li>
+    </ul>
+    <br>
+    <h3>Token Data</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/getTokenData'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Return Value:</i> Returns an array containing all token objects.</p></li>
+        <li><p><i>Usage:</i> View tokens that the user has created.</p></li>
+    </ul>
+    <br>
+    <hr>
+    <h2>POST Endpoints</h2>
+    <h3>Switch Set</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/switchSet'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Body Params:</i> <br>
+            - 'name' (required) | the code of the corresponding set name
+        </p></li>
+        <li><p><i>Return Value:</i> Returns an apropriate status code with a success/failure message.</p></li>
+        <li><p><i>Usage:</i> Switch the current pool of cards the user can view.</p></li>
+        <li><p><i>Example Set Codes:</i> <br>
+            - 'LEA' (Alpha)<br>
+            - 'ATQ' (Antiquities)<br>
+            - 'FEM' (Fallen Empires)
+        </p></li>
+    </ul>
+    <br>
+    <h3>Add/Remove Card</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/addCardToCollection'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Body Params:</i> <br>
+            - 'name' (required) | the exact name of the card
+        </p></li>
+        <li><p><i>Return Value:</i> Returns an apropriate status code with a success/failure message.</p></li>
+        <li><p><i>Usage:</i> Flips a cards 'collected' field (i.e. sets it to true if false, or sets to false if true).</p></li>
+        <li><p><i>Examples:</i> <br>
+            - 'Lightning Bolt' (Returns 204 Status)<br>
+            - 'Lihgtning Blat' (Returns 400 Status)
+        </p></li>
+    </ul>
+    <br>
+    <h3>Create Token</h3>
+    <ul>
+        <li><p><i>Relative URL:</i> '/addTokenToCollection'</p></li>
+        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Body Params:</i> <br>
+            - 'name' (required) | the name of the token <br>
+            - 'description' (required) | the description and characteristics of the token
+        </p></li>
+        <li><p><i>Return Value:</i> Returns an apropriate status code with a success/failure message.</p></li>
+        <li><p><i>Usage:</i> Allows a user to create custom tokens and track them.</p></li>
+        <li><p><i>Examples:</i> <br>
+            - 'Name: Goblin' 'Description: 1/1 Red Creature with Haste' (Returns 201 Status)<br>
+            - 'Name: Angel' 'Description:' (Returns 400 Status)
+        </p></li>
+    </ul>
+    
 </body>
 </html>
