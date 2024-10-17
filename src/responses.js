@@ -1,7 +1,12 @@
+// Used in-class examples as references and borrowed code:
+/// https://github.com/IGM-RichMedia-at-RIT/body-parse-example-done/blob/master
+/// https://github.com/IGM-RichMedia-at-RIT/head-request-example-done/blob/master
+
 const fs = require('fs');
 
 // Front Facing Files
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
+const documentation = fs.readFileSync(`${__dirname}/../client/documentation.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
 // Remove unneeded data and clean up
@@ -49,6 +54,9 @@ const respondJSON = (request, response, status, content) => respond(request, res
 // Returns index.html
 const getIndex = (request, response) => respond(request, response, 200, index, 'text/html');
 
+// Returns documentation.html
+const getDocumentation = (request, response) => respond(request, response, 200, documentation, 'text/html');
+
 // Returns CSS sheet
 const getCSS = (request, response) => respond(request, response, 200, css, 'text/css');
 
@@ -72,11 +80,9 @@ const getTokenData = (request, response) => {
 const getCollectionData = (request, response) => {
   const status = 200;
 
-  let collection = data.filter((card) => {
-    return card.collected === true;
-  });
+  const results = data.filter((card) => card.collected === true);
 
-  const responseContent = { collection };
+  const responseContent = { results };
 
   return respondJSON(request, response, status, responseContent);
 };
@@ -85,9 +91,11 @@ const getCollectionData = (request, response) => {
 const getRandomCard = (request, response) => {
   const status = 200;
 
-  const chosenCard = data[Math.floor(Math.random() * 294)];
+  const chosenCard = data[Math.floor(Math.random() * data.length)];
 
-  const responseContent = { chosenCard };
+  const results = [chosenCard];
+
+  const responseContent = { results };
 
   return respondJSON(request, response, status, responseContent);
 };
@@ -270,6 +278,7 @@ const notFound = (request, response) => {
 
 module.exports = {
   getIndex,
+  getDocumentation,
   getCSS,
   getRawData,
   getCollectionData,

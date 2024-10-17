@@ -5,41 +5,79 @@
   <link rel="stylesheet" type="text/css" href="/style.css">
   
   <script>
+    // Used in-class examples as references and borrowed code:
+    /// https://github.com/IGM-RichMedia-at-RIT/body-parse-example-done/blob/master
+    /// https://github.com/IGM-RichMedia-at-RIT/head-request-example-done/blob/master
+
+    // Parse responses from API once received
     const handleResponse = async (response, parseResponse) => {
       
-      const content = document.querySelector('#content');
+      const rawContent = document.querySelector('#rawContent');
+      rawContent.innerHTML = '';
+      const cleanContent = document.querySelector('#cleanContent');
+      cleanContent.innerHTML = '';
 
+      // Show Result & Status Code
       switch(response.status) {
         case 200: 
-          content.innerHTML = `<b>Success</b>`;
+          rawContent.innerHTML = `<b>200: Success</b>`;
           break;
         case 201:
-          content.innerHTML = `<b>Created</b>`;
+          rawContent.innerHTML = `<b>201: Created</b>`;
           break;
         case 204:
-          content.innerHTML = `<b>Updated</b>`;
+          rawContent.innerHTML = `<b>204:Updated</b>`;
           break;
         case 400: 
-          content.innerHTML = `<b>Bad Request</b>`;
+          rawContent.innerHTML = `<b>400: Bad Request</b>`;
           break;
         case 404:
-          content.innerHTML = `<b>Resource Not Found</b>`;
+          rawContent.innerHTML = `<b>404: Resource Not Found</b>`;
           break;
         default: 
-          content.innerHTML = `Error code not implemented by client.`;
+          rawContent.innerHTML = `Error code not implemented by client.`;
           break;
       }
 
+      // Make the incoming data look "pretty"
       if(parseResponse) {
         let obj = await response.json();
-        
+
         let jsonString = JSON.stringify(obj);
-        content.innerHTML += `<p>${jsonString}</p>`;
+        rawContent.innerHTML += `<p>${jsonString}</p>`;
+
+        if(obj.results != null)
+        {
+          if(obj.results.length > 1)
+          {
+            obj.results.forEach(element => {
+              cleanContent.innerHTML += `<p>${element.name}</p>`;
+            });
+          }
+          else if (obj.results.length === 1)
+          {
+            cleanContent.innerHTML += `<p><i>Card Name:</i> ${obj.results[0].name}</p>`;
+            cleanContent.innerHTML += `<p><i>Cost:</i> ${obj.results[0].manaCost}</p>`;
+            cleanContent.innerHTML += `<p><i>Type:</i> ${obj.results[0].type}</p>`;
+            cleanContent.innerHTML += `<p><i>Text:</i> ${obj.results[0].text}</p>`;
+            cleanContent.innerHTML += `<p><i>Rarity:</i> ${obj.results[0].rarity}</p>`;
+            cleanContent.innerHTML += `<p><i>Artist:</i> ${obj.results[0].artist}</p>`;
+          }
+        }
+        else if (obj.tokenData != null)
+        {
+          console.log(obj.tokenData);
+          obj.tokenData.forEach(element => {
+            cleanContent.innerHTML += `<p><i>Name:</i> ${element.name}</p>`;
+            cleanContent.innerHTML += `<p><i>Description:</i> ${element.description}</p><br>`;
+          });
+        }
       } else {
-        content.innerHTML += '<p>Meta Data Received</p>';
+        rawContent.innerHTML += '<p>Meta Data Received</p>';
       }
     };
 
+    // Sends a GET request to given URL
     const requestUpdate = async (userForm) => {
       const url = userForm.querySelector('#urlField').value;
       const method = userForm.querySelector('#methodSelect').value;
@@ -53,6 +91,7 @@
       handleResponse(response, method === 'get');
     };
 
+    // Variant of requestUpdate specially suited for getCard calls due to extra parameters
     const requestCardSearch = async (userForm) => {
       const method = userForm.querySelector('#methodSelect').value;
 
@@ -88,6 +127,7 @@
       handleResponse(response, method === 'get');
     };
 
+    // Sends POST request to given URL
     const sendPost = async (nameForm) => {
       const url = nameForm.getAttribute('action');
       const method = nameForm.getAttribute('method');
@@ -112,6 +152,7 @@
       handleResponse(response, true);
     };
 
+    // Attaches function calls to correct buttons
     const init = () => {
 
       const simpleGetForm = document.querySelector('#simpleGetForm');
@@ -161,8 +202,11 @@
 <body>
   <section id="top">
     <h1>MTG Old School Collection Tracker</h1>
+     <a href="/documentation"><button type="button">Documentation</button></a>
     <hr>
     <h2>GET/HEAD Requests:</h2>
+
+    <br>
 
     <h3>Basic Requests</h3>
       <form id="simpleGetForm" method="GET">
@@ -228,9 +272,13 @@
         <input type="submit" value="Send" />
       </form>
 
+    <br>
+
     <hr>
 
     <h2> POST Requests</h2>
+
+    <br>
 
     <h3>Modify Card Collection</h3>
       <form id="collectionForm" action="/addCardToCollection" method="POST">
@@ -269,15 +317,19 @@
         <input id="switchSetsButton" type="submit" value="Switch Set" />
       </form>
 
+      <br>
+
     <hr>
 
   </section>
   
-  <section>
+  <section id="content">
     <h2>Card(s) Returned</h2>
     <section id="cleanContent">
 
     </section>
+
+    <hr>
 
     <h2>Raw Data</h2>
     <section id="rawContent">

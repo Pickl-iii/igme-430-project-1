@@ -1,3 +1,7 @@
+// Used in-class examples as references and borrowed code:
+/// https://github.com/IGM-RichMedia-at-RIT/body-parse-example-done/blob/master
+/// https://github.com/IGM-RichMedia-at-RIT/head-request-example-done/blob/master
+
 const http = require('http');
 const query = require('querystring');
 
@@ -39,13 +43,15 @@ const handlePost = (request, response, parsedUrl) => {
 const handleGet = (request, response, parsedUrl) => {
   if (parsedUrl.pathname === '/index' || parsedUrl.pathname === '/') {
     responseHandler.getIndex(request, response);
+  } else if (parsedUrl.pathname === '/documentation') {
+    responseHandler.getDocumentation(request, response);
   } else if (parsedUrl.pathname === '/style.css') {
     responseHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getRawData') {
     responseHandler.getRawData(request, response);
   } else if (parsedUrl.pathname === '/getCollectionData') {
     responseHandler.getCollectionData(request, response);
-  }else if (parsedUrl.pathname === '/getTokenData') {
+  } else if (parsedUrl.pathname === '/getTokenData') {
     responseHandler.getTokenData(request, response);
   } else if (parsedUrl.pathname === '/getRandomCard') {
     responseHandler.getRandomCard(request, response);
