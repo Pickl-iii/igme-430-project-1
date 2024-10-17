@@ -13,7 +13,7 @@
     <h3>Card Search</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/getCard'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> GET/HEAD</p></li>
         <li><p><i>Query Params:</i> <br>
             - 'name' (optional) | the name of the card <br>
             - 'cmc' (optional) | the converted mana cost of the card <br>
@@ -34,7 +34,7 @@
     <h3>Raw Data</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/getRawData'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> GET/HEAD</p></li>
         <li><p><i>Return Value:</i> Returns an array containing every card object in the currently selected set.</p></li>
         <li><p><i>Usage:</i> View raw json data for testing / usage in other applications.</p></li>
     </ul>
@@ -42,7 +42,7 @@
     <h3>Random Card</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/getRandomCard'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> GET/HEAD</p></li>
         <li><p><i>Return Value:</i> Returns an array containing 1 card object chosen at random from the current set.</p></li>
         <li><p><i>Usage:</i> Find random cards.</p></li>
     </ul>
@@ -50,7 +50,7 @@
     <h3>Collection Data</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/getCollectionData'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> GET/HEAD</p></li>
         <li><p><i>Return Value:</i> Returns an array containing all card objects with a 'collected' field equal to true.</p></li>
         <li><p><i>Usage:</i> View cards that the user has marked as being collected.</p></li>
     </ul>
@@ -58,7 +58,7 @@
     <h3>Token Data</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/getTokenData'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> GET/HEAD</p></li>
         <li><p><i>Return Value:</i> Returns an array containing all token objects.</p></li>
         <li><p><i>Usage:</i> View tokens that the user has created.</p></li>
     </ul>
@@ -68,7 +68,7 @@
     <h3>Switch Set</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/switchSet'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> POST</p></li>
         <li><p><i>Body Params:</i> <br>
             - 'name' (required) | the code of the corresponding set name
         </p></li>
@@ -84,7 +84,7 @@
     <h3>Add/Remove Card</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/addCardToCollection'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> POST</p></li>
         <li><p><i>Body Params:</i> <br>
             - 'name' (required) | the exact name of the card
         </p></li>
@@ -99,7 +99,7 @@
     <h3>Create Token</h3>
     <ul>
         <li><p><i>Relative URL:</i> '/addTokenToCollection'</p></li>
-        <li><p><i>Supported Methods:</i> //TO-DO</p></li>
+        <li><p><i>Supported Methods:</i> POST</p></li>
         <li><p><i>Body Params:</i> <br>
             - 'name' (required) | the name of the token <br>
             - 'description' (required) | the description and characteristics of the token
